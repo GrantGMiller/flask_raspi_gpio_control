@@ -1,3 +1,5 @@
+print('inside __init__')
+
 from flask import (
     Flask,
     jsonify,
@@ -13,3 +15,5 @@ def Index():
 
 if __name__ == '__main__':
     app.run()
+
+print('end __init__')
