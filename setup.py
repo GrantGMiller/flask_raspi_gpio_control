@@ -15,7 +15,6 @@ setup(
     packages=packages,
     install_requires=[
         'flask',
-        'dataset',
     ],
 
     author="Grant miller",
