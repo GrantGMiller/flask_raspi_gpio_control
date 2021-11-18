@@ -8,7 +8,7 @@ from flask import (
 app = Flask('light controller')
 
 
-@app.get('/')
+@app.route('/')
 def Index():
     return jsonify('hello from index')
 
