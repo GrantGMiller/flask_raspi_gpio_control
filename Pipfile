@@ -7,7 +7,6 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-gpiosimulator = "*"
 twine = "*"
 requests = "*"
 

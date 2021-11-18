@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2d44e8a9fd6a91fcab31a157b11a949eb9f1eb9d5643a9a5fb7f63bdf064db03"
+            "sha256": "112e2dcc8f3418e3ee68d86f8b8bfe34c497591f2b9f7481ad7db054130209a8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -67,13 +67,6 @@
             ],
             "index": "pypi",
             "version": "==2.0.2"
-        },
-        "gpiosimulator": {
-            "hashes": [
-                "sha256:08a221d03c9c5bd137d573b24aa0ebb9871760b12b8a1090392cbded3d06fee8"
-            ],
-            "index": "pypi",
-            "version": "==0.1"
         },
         "idna": {
             "hashes": [
