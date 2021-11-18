@@ -1,19 +1,15 @@
-print('inside __init__')
+import time
 
-from flask import (
-    Flask,
-    jsonify,
-)
+import requests
+import sys
 
-app = Flask('light controller')
-
-
-@app.route('/')
-def Index():
-    return jsonify('hello from index')
+if sys.platform.startswith('win'):
+    BASE_URL = 'http://192.168.68.105:5000/'
+else: #linux
+    BASE_URL = 'http://192.168.68.105:5000/'
 
 
-if __name__ == '__main__':
-    app.run()
-
-print('end __init__')
+while True:
+    resp = requests.get(BASE_URL)
+    print('resp.text=', resp.text)
+    time.sleep(1)

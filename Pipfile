@@ -9,6 +9,7 @@ verify_ssl = true
 flask = "*"
 gpiosimulator = "*"
 twine = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"
