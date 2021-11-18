@@ -22,7 +22,10 @@ for pinName in ALL_PIN_NUMBERS:
 
 def Start():
     print('starting while loop')
+    totalRequests = 0
+    startTime = time.time()
     while True:
+        totalRequests += 1
         resp = requests.get(BASE_URL)
         print('resp.text=', resp.text)
         for pinNumberStr, state in resp.json().items():
@@ -30,7 +33,10 @@ def Start():
                 int(pinNumberStr),
                 {'On': 0, 'Off': 1}.get(state)
             )
-        time.sleep(1)
+
+        print('Average req/second=', round(totalRequests/(time.time()-startTime), 2))
+        if sys.platform.startswith('win'):
+            time.sleep(1)
 
 
 if __name__ == '__main__':
