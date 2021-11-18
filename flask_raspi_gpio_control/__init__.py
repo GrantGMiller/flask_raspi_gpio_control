@@ -37,6 +37,9 @@ def Start():
         print('Average req/second=', round(totalRequests/(time.time()-startTime), 2))
         if sys.platform.startswith('win'):
             time.sleep(1)
+        else:
+            # with no delay, raspi was able to send 5 request per second to local webserver
+            time.sleep(1)
 
 
 if __name__ == '__main__':
