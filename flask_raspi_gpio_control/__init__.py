@@ -35,12 +35,15 @@ def BlinkAllLights(numberOfBlinks=1):
         time.sleep(DELAY)
 
 
+go = True
+
+
 def Start():
     print('starting while loop')
     BlinkAllLights(7)
     totalRequests = 0
     startTime = time.time()
-    while True:
+    while go is True:
         totalRequests += 1
         resp = requests.get(BASE_URL)
         print('resp.text=', resp.text)
@@ -58,9 +61,15 @@ def Start():
             time.sleep(1)
 
         if GPIO.input(PIN_BUTTON) == GPIO.LOW:
-            BlinkAllLights(5)
+            print('eventCallbacks=', eventCallbacks)
             if PIN_BUTTON in eventCallbacks:
                 eventCallbacks[PIN_BUTTON](GPIO.input(PIN_BUTTON))
+            BlinkAllLights(5)
+
+
+def Stop():
+    global go
+    go = False
 
 
 eventCallbacks = {}
