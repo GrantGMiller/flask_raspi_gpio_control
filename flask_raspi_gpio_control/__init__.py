@@ -2,7 +2,8 @@ import time
 import requests
 import sys
 
-print('test 810')
+print('test 812')
+time.sleep(3)
 
 ALL_OUTPUT_PIN_NUMBERS = [16, 20, 21, 5, 6, 13, 19, 26]
 PIN_BUTTON = 12
