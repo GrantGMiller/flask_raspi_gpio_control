@@ -24,20 +24,20 @@ GPIO.setup(PIN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
 def BlinkAllLights(numberOfBlinks=1):
+    DELAY = 0.1
     print('BlinkAllLights(', numberOfBlinks)
     for i in range(numberOfBlinks * 2):
         for pin in ALL_OUTPUT_PIN_NUMBERS:
             GPIO.output(pin, 1)
-        time.sleep(0.2)
+        time.sleep(DELAY)
         for pin in ALL_OUTPUT_PIN_NUMBERS:
             GPIO.output(pin, 0)
-
-
-BlinkAllLights(10)
+        time.sleep(DELAY)
 
 
 def Start():
     print('starting while loop')
+    BlinkAllLights(7)
     totalRequests = 0
     startTime = time.time()
     while True:
@@ -57,7 +57,7 @@ def Start():
             # with no delay, raspi was able to send 5 request per second to local webserver
             time.sleep(1)
 
-        if GPIO.input(PIN_BUTTON) == GPIO.HIGH:
+        if GPIO.input(PIN_BUTTON) == GPIO.LOW:
             BlinkAllLights(5)
             if PIN_BUTTON in eventCallbacks:
                 eventCallbacks[PIN_BUTTON](GPIO.input(PIN_BUTTON))
