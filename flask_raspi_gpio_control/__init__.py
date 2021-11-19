@@ -24,13 +24,14 @@ GPIO.setup(PIN_BUTTON, GPIO.IN)
 
 
 def BlinkAllLights(numberOfBlinks=1):
+    print('BlinkAllLights(', numberOfBlinks)
     for i in range(numberOfBlinks * 2):
         for pin in ALL_OUTPUT_PIN_NUMBERS:
             GPIO.output(pin, 1)
         time.sleep(0.2)
         for pin in ALL_OUTPUT_PIN_NUMBERS:
             GPIO.output(pin, 0)
-        time.sleep(0.2)
+        time.sleep(0.1)
 
 
 BlinkAllLights(25)
