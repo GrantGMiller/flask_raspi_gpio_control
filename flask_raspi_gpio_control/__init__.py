@@ -2,6 +2,8 @@ import time
 import requests
 import sys
 
+print('test 810')
+
 ALL_OUTPUT_PIN_NUMBERS = [16, 20, 21, 5, 6, 13, 19, 26]
 PIN_BUTTON = 12
 
@@ -62,12 +64,13 @@ def Start():
 
         if GPIO.input(PIN_BUTTON) == GPIO.LOW:
             print('eventCallbacks=', eventCallbacks)
+            BlinkAllLights(5)
             if PIN_BUTTON in eventCallbacks:
                 eventCallbacks[PIN_BUTTON](GPIO.input(PIN_BUTTON))
-            BlinkAllLights(5)
 
 
 def Stop():
+    print('Stop()')
     global go
     go = False
 
