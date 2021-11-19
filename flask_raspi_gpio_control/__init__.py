@@ -57,6 +57,9 @@ def Start():
             print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
         except Exception as e:
             print(e)
+            # reset the measurements
+            totalRequests = 0
+            startTime = time.time()
 
         if sys.platform.startswith('win'):
             time.sleep(1)
