@@ -57,8 +57,17 @@ def Start():
             # with no delay, raspi was able to send 5 request per second to local webserver
             time.sleep(1)
 
-        if GPIO.input(PIN_BUTTON) == GPIO.LOW:
-            BlinkAllLights(10)
+        if GPIO.input(PIN_BUTTON) == GPIO.HIGH:
+            BlinkAllLights(5)
+            if PIN_BUTTON in eventCallbacks:
+                eventCallbacks[PIN_BUTTON](GPIO.input(PIN_BUTTON))
+
+
+eventCallbacks = {}
+
+
+def RegisterEvent(pin, callback):
+    eventCallbacks[pin] = callback
 
 
 if __name__ == '__main__':
