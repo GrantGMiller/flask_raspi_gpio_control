@@ -2,9 +2,6 @@ import time
 import requests
 import sys
 
-print('test 812')
-time.sleep(3)
-
 ALL_OUTPUT_PIN_NUMBERS = [16, 20, 21, 5, 6, 13, 19, 26]
 PIN_BUTTON = 12
 
@@ -47,16 +44,20 @@ def Start():
     totalRequests = 0
     startTime = time.time()
     while go is True:
-        totalRequests += 1
-        resp = requests.get(BASE_URL)
-        print('resp.text=', resp.text)
-        for pinNumberStr, state in resp.json().items():
-            GPIO.output(
-                int(pinNumberStr),
-                {'On': 0, 'Off': 1}.get(state)
-            )
+        try:
+            totalRequests += 1
+            resp = requests.get(BASE_URL)
+            print('resp.text=', resp.text)
+            for pinNumberStr, state in resp.json().items():
+                GPIO.output(
+                    int(pinNumberStr),
+                    {'On': 0, 'Off': 1}.get(state)
+                )
 
-        print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
+            print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
+        except Exception as e:
+            print(e)
+
         if sys.platform.startswith('win'):
             time.sleep(1)
         else:
