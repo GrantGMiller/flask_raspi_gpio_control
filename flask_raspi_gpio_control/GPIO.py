@@ -1,3 +1,5 @@
+import random
+
 pinStates = {}
 
 ALL_PIN_NUMBERS = [14, 15, 18, 23, 24, 25, 8, 7, 12, 16, 20, 21, 2, 3, 4, 17, 27, 22, 10, 9, 11, 5, 6, 13, 19, 26]
@@ -9,17 +11,19 @@ LOW = 0
 
 BCM = 'BCM'
 
+PUD_UP = 'PUD_UP'
+
 
 def setmode(mode):
-    pass
+    print('setmode(', mode)
 
 
 def setwarnings(state):
-    pass
+    print('setwarning(', state)
 
 
-def setup(pin, mode, initial=None):
-    pass
+def setup(pin, mode, initial=None, pull_up_down=None):
+    print('setup(', pin, mode, initial, pull_up_down)
 
 
 def output(pin, state):
@@ -28,3 +32,7 @@ def output(pin, state):
     if oldState != state:
         print('Pin {} changed to {}'.format(pin, state))
     pinStates[pin] = state
+
+
+def input(pin):
+    return random.choice([HIGH, LOW])

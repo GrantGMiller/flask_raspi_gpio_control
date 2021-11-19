@@ -14,7 +14,6 @@ setup(
 
     packages=packages,
     install_requires=[
-        'flask',
         'requests',
     ],
 

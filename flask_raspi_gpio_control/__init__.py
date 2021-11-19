@@ -20,7 +20,7 @@ else:  # linux
 for pinName in ALL_OUTPUT_PIN_NUMBERS:
     GPIO.setup(int(pinName), GPIO.OUT)
 
-GPIO.setup(PIN_BUTTON, GPIO.IN)
+GPIO.setup(PIN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
 def BlinkAllLights(numberOfBlinks=1):
@@ -31,10 +31,9 @@ def BlinkAllLights(numberOfBlinks=1):
         time.sleep(0.2)
         for pin in ALL_OUTPUT_PIN_NUMBERS:
             GPIO.output(pin, 0)
-        time.sleep(0.1)
 
 
-BlinkAllLights(25)
+BlinkAllLights(10)
 
 
 def Start():
@@ -59,7 +58,7 @@ def Start():
             time.sleep(1)
 
         if GPIO.input(PIN_BUTTON) == GPIO.LOW:
-            BlinkAllLights(25)
+            BlinkAllLights(10)
 
 
 if __name__ == '__main__':
