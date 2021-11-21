@@ -29,8 +29,8 @@ def setup(pin, mode, initial=None, pull_up_down=None):
 def output(pin, state):
     assert isinstance(pin, int) and isinstance(state, int)
     oldState = pinStates.get(pin, 0)
-    if oldState != state:
-        print('Pin {} changed to {}'.format(pin, state))
+    # if oldState != state:
+    print('Pin {} changed to {}'.format(pin, state))
     pinStates[pin] = state
 
 

@@ -57,6 +57,7 @@ def Start():
 
             print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
             delay = resp.json().get('delay', 1)
+            BlinkAllLights(1)
         except Exception as e:
             print(e)
             # reset the measurements
