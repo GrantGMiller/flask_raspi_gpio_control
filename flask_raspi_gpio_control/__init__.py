@@ -72,7 +72,7 @@ def Start():
 
             print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
             delay = resp.json().get('delay', 1)
-            BlinkAllLights(2)
+
         except Exception as e:
             print(e)
             # reset the measurements
@@ -83,6 +83,7 @@ def Start():
         time.sleep(delay)
 
         if GPIO.input(PIN_BUTTON) == GPIO.LOW:
+            Slack('button pushed, triggering callback')
             print('eventCallbacks=', eventCallbacks)
             BlinkAllLights(3)
             if PIN_BUTTON in eventCallbacks:
