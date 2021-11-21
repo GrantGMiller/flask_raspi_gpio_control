@@ -52,7 +52,7 @@ def Slack(*args):
     print('Slack resp=', resp.text)
 
 
-Slack('starting')
+Slack('starting', '412')
 
 
 def Start():
@@ -63,7 +63,11 @@ def Start():
     while go is True:
         try:
             totalRequests += 1
-            resp = requests.get(BASE_URL, timeout=2)
+            resp = requests.get(
+                BASE_URL + 'lights',
+                params={'apiKey': 'MillerTime5625475311!'},
+                timeout=2
+            )
             print('resp.text=', resp.text)
             for pinNumberStr, state in resp.json().items():
                 if int(pinNumberStr) in ALL_OUTPUT_PIN_NUMBERS:
