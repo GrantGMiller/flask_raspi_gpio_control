@@ -24,7 +24,7 @@ GPIO.setup(PIN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
 def BlinkAllLights(numberOfBlinks=1):
-    DELAY = 0.1
+    DELAY = 0.3
     print('BlinkAllLights(', numberOfBlinks)
     for i in range(numberOfBlinks * 2):
         for pin in ALL_OUTPUT_PIN_NUMBERS:
@@ -38,9 +38,24 @@ def BlinkAllLights(numberOfBlinks=1):
 go = True
 
 
+def Slack(*args):
+    requests.post(
+        url='https://hooks.slack.com/services/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',
+        json={
+            'text': '{}: {}'.format(
+                sys.platform,
+                ' '.join(str(a) for a in args)
+            )
+        }
+    )
+
+
+Slack('starting')
+
+
 def Start():
     print('starting while loop')
-    BlinkAllLights(7)
+    BlinkAllLights(2)
     totalRequests = 0
     startTime = time.time()
     while go is True:
@@ -57,7 +72,7 @@ def Start():
 
             print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
             delay = resp.json().get('delay', 1)
-            BlinkAllLights(1)
+            BlinkAllLights(2)
         except Exception as e:
             print(e)
             # reset the measurements
@@ -69,7 +84,7 @@ def Start():
 
         if GPIO.input(PIN_BUTTON) == GPIO.LOW:
             print('eventCallbacks=', eventCallbacks)
-            BlinkAllLights(5)
+            BlinkAllLights(3)
             if PIN_BUTTON in eventCallbacks:
                 eventCallbacks[PIN_BUTTON](GPIO.input(PIN_BUTTON))
 
