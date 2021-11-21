@@ -52,7 +52,7 @@ def Start():
                 if int(pinNumberStr) in ALL_OUTPUT_PIN_NUMBERS:
                     GPIO.output(
                         int(pinNumberStr),
-                        {'On': GPIO.LOW, 'Off': GPIO.HIGH}.get(state)
+                        {'On': GPIO.HIGH, 'Off': GPIO.LOW}.get(state)
                     )
 
             print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
