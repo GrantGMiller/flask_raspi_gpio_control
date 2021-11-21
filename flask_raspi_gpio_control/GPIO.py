@@ -35,4 +35,4 @@ def output(pin, state):
 
 
 def input(pin):
-    return random.choice([HIGH, LOW])
+    return HIGH#random.choice([HIGH, LOW])

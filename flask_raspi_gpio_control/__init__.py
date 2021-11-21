@@ -49,10 +49,11 @@ def Start():
             resp = requests.get(BASE_URL, timeout=2)
             print('resp.text=', resp.text)
             for pinNumberStr, state in resp.json().items():
-                GPIO.output(
-                    int(pinNumberStr),
-                    {'On': GPIO.HIGH, 'Off': GPIO.LOW}.get(state)
-                )
+                if int(pinNumberStr) in ALL_OUTPUT_PIN_NUMBERS:
+                    GPIO.output(
+                        int(pinNumberStr),
+                        {'On': GPIO.LOW, 'Off': GPIO.HIGH}.get(state)
+                    )
 
             print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
             delay = resp.json().get('delay', 1)
