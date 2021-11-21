@@ -51,7 +51,7 @@ def Start():
             for pinNumberStr, state in resp.json().items():
                 GPIO.output(
                     int(pinNumberStr),
-                    {'On': 0, 'Off': 1}.get(state)
+                    {'On': GPIO.LOW, 'Off': GPIO.HIGH}.get(state)
                 )
 
             print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
