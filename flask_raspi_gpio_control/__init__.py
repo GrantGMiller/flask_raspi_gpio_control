@@ -46,7 +46,7 @@ def Start():
     while go is True:
         try:
             totalRequests += 1
-            resp = requests.get(BASE_URL)
+            resp = requests.get(BASE_URL, timeout=2)
             print('resp.text=', resp.text)
             for pinNumberStr, state in resp.json().items():
                 GPIO.output(
@@ -55,17 +55,15 @@ def Start():
                 )
 
             print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
+            delay = resp.json().get('delay', 1)
         except Exception as e:
             print(e)
             # reset the measurements
             totalRequests = 0
             startTime = time.time()
+            delay = 1
 
-        if sys.platform.startswith('win'):
-            time.sleep(1)
-        else:
-            # with no delay, raspi was able to send 5 request per second to local webserver
-            time.sleep(1)
+        time.sleep(delay)
 
         if GPIO.input(PIN_BUTTON) == GPIO.LOW:
             print('eventCallbacks=', eventCallbacks)
