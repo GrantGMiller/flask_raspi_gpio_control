@@ -26,7 +26,7 @@ GPIO.setup(PIN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 def BlinkAllLights(numberOfBlinks=1):
     DELAY = 0.3
     print('BlinkAllLights(', numberOfBlinks)
-    for i in range(numberOfBlinks * 2):
+    for i in range(numberOfBlinks):
         for pin in ALL_OUTPUT_PIN_NUMBERS:
             GPIO.output(pin, 1)
         time.sleep(DELAY)
@@ -39,7 +39,7 @@ go = True
 
 
 def Slack(*args):
-    requests.post(
+    resp = requests.post(
         url='https://hooks.slack.com/services/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',
         json={
             'text': '{}: {}'.format(
@@ -48,6 +48,7 @@ def Slack(*args):
             )
         }
     )
+    print('Slack resp=', resp.text)
 
 
 Slack('starting')
