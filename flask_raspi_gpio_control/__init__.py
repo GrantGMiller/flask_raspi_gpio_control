@@ -7,7 +7,8 @@ ALL_OUTPUT_PIN_NUMBERS = [16, 20, 21, 5, 6, 13, 19, 26]
 PIN_BUTTON = 12
 
 if sys.platform.startswith('win'):
-    BASE_URL = 'http://localhost:5000/'
+    # BASE_URL = 'http://localhost:5000/'
+    BASE_URL = 'https://lights.grant-miller.com/'
     import GPIO
 
 
@@ -75,7 +76,7 @@ def Start():
             )
             print('resp.text=', resp.text)
             for pinNumberStr, state in resp.json().items():
-                if pinNumberStr in ALL_OUTPUT_PIN_NUMBERS:
+                if pinNumberStr.isdigit() and int(pinNumberStr) in ALL_OUTPUT_PIN_NUMBERS:
                     GPIO.output(
                         int(pinNumberStr),
                         {'On': GPIO.HIGH, 'Off': GPIO.LOW}.get(state)
