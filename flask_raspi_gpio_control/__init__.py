@@ -7,12 +7,12 @@ ALL_OUTPUT_PIN_NUMBERS = [16, 20, 21, 5, 6, 13, 19, 26]
 PIN_BUTTON = 12
 
 if sys.platform.startswith('win'):
-    BASE_URL = 'http://192.168.68.105:5000/'
+    BASE_URL = 'http://localhost:5000/'
     import GPIO
 
 
 else:  # linux
-    BASE_URL = 'http://192.168.68.105:5000/'
+    BASE_URL = 'https://lights.grant-miller.com/'
     import RPi.GPIO as GPIO
 
     GPIO.setmode(GPIO.BCM)
@@ -52,7 +52,7 @@ def Slack(*args):
     print('Slack resp=', resp.text)
 
 
-Slack('starting', '838')
+Slack('starting', 'using production server')
 
 
 def Start():
