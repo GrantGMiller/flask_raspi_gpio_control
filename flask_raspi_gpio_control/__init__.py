@@ -55,9 +55,13 @@ def Slack(*args):
 
 Slack('starting', 'using production server')
 
+numErrors = 0
+
 
 def Start():
     print('starting while loop')
+    global numErrors
+
     BlinkAllLights(2)
     totalRequests = 0
     startTime = time.time()
@@ -81,6 +85,10 @@ def Start():
             delay = resp.json().get('delay', 1)
 
         except Exception as e:
+            numErrors += 1
+            if numErrors <= 1:
+                Slack(e)
+
             print(e)
             # reset the measurements
             totalRequests = 0
