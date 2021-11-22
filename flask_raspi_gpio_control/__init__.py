@@ -40,16 +40,17 @@ go = True
 
 
 def Slack(*args):
-    resp = requests.post(
-        url=config.SLACK_URL,
-        json={
-            'text': '{}: {}'.format(
-                sys.platform,
-                ' '.join(str(a) for a in args)
-            )
-        }
-    )
-    print('Slack resp=', resp.text)
+    if not sys.platform.startswith('win'):
+        resp = requests.post(
+            url=config.SLACK_URL,
+            json={
+                'text': '{}: {}'.format(
+                    sys.platform,
+                    ' '.join(str(a) for a in args)
+                )
+            }
+        )
+        print('Slack resp=', resp.text)
 
 
 Slack('starting', 'using production server')
@@ -70,7 +71,7 @@ def Start():
             )
             print('resp.text=', resp.text)
             for pinNumberStr, state in resp.json().items():
-                if int(pinNumberStr) in ALL_OUTPUT_PIN_NUMBERS:
+                if pinNumberStr in ALL_OUTPUT_PIN_NUMBERS:
                     GPIO.output(
                         int(pinNumberStr),
                         {'On': GPIO.HIGH, 'Off': GPIO.LOW}.get(state)
