@@ -65,7 +65,7 @@ def Start():
             totalRequests += 1
             resp = requests.get(
                 BASE_URL + 'lights',
-                params={'apiKey': 'MillerTime5625475311!'},
+                params={'apiKey': config.API_KEY},
                 timeout=2
             )
             print('resp.text=', resp.text)
