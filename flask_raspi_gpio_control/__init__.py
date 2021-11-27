@@ -2,25 +2,27 @@ import time
 import requests
 import sys
 import config
+import gpio_helper as GPIO
 
 ALL_OUTPUT_PIN_NUMBERS = [16, 20, 21, 5, 6, 13, 19, 26]
 PIN_BUTTON = 12
+LEFT_TO_RIGHT = 'left to right'
+RIGHT_TO_LEFT = 'right to left'
+TOGGLE = 'Toggle'
+SLEEP = 'Sleep'
 
 if sys.platform.startswith('win'):
     # BASE_URL = 'http://localhost:5000/'
-    BASE_URL = 'https://lights.grant-miller.com/'
-    import GPIO
+    BASE_URL = 'http://192.168.68.105:5000/'
+    # BASE_URL = 'https://lights.grant-miller.com/'
 
 
 else:  # linux
-    BASE_URL = 'https://lights.grant-miller.com/'
-    import RPi.GPIO as GPIO
+    # BASE_URL = 'https://lights.grant-miller.com/'
+    BASE_URL = 'http://192.168.68.105:5000/'
 
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setwarnings(True)
-
-for pinName in ALL_OUTPUT_PIN_NUMBERS:
-    GPIO.setup(int(pinName), GPIO.OUT)
+for pinNum in ALL_OUTPUT_PIN_NUMBERS:
+    GPIO.setup(pinNum, GPIO.OUT)
 
 GPIO.setup(PIN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
@@ -82,6 +84,23 @@ def Start():
                         {'On': GPIO.HIGH, 'Off': GPIO.LOW}.get(state)
                     )
 
+            for macro in resp.json().get('macros', []):
+                for action in macro.get('actions', []):
+                    print('93 action=', action)
+                    if str(action[0]).isdigit() and action[0] in ALL_OUTPUT_PIN_NUMBERS:
+                        pinNum = action[0]
+                        GPIO.output(
+                            pinNum,
+                            {
+                                'On': GPIO.HIGH,
+                                'Off': GPIO.LOW,
+                                'Toggle': GPIO.HIGH if GPIO.read(pinNum) == GPIO.LOW else GPIO.LOW,
+                            }.get(action[1])
+                        )
+
+                    elif action[0] == SLEEP:
+                        time.sleep(action[1])
+
             print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
             delay = resp.json().get('delay', 1)
 
@@ -95,6 +114,9 @@ def Start():
             totalRequests = 0
             startTime = time.time()
             delay = 1
+
+            if sys.platform.startswith('win'):
+                raise e
 
         time.sleep(delay)
 
