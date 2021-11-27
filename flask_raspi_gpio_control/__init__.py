@@ -2,7 +2,7 @@ import time
 import requests
 import sys
 import config
-import gpio_helper as GPIO
+from . import gpio_helper as GPIO
 
 ALL_OUTPUT_PIN_NUMBERS = [16, 20, 21, 5, 6, 13, 19, 26]
 PIN_BUTTON = 12

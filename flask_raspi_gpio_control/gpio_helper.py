@@ -2,7 +2,7 @@ import sys
 from collections import defaultdict
 
 if sys.platform.startswith('win'):
-    import GPIO
+    from . import GPIO
 
 
 else:  # linux
