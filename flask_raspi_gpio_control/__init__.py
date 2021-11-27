@@ -18,8 +18,8 @@ if sys.platform.startswith('win'):
 
 
 else:  # linux
-    # BASE_URL = 'https://lights.grant-miller.com/'
-    BASE_URL = 'http://192.168.68.105:5000/'
+    BASE_URL = 'https://lights.grant-miller.com/'
+    # BASE_URL = 'http://192.168.68.105:5000/'
 
 for pinNum in ALL_OUTPUT_PIN_NUMBERS:
     GPIO.setup(pinNum, GPIO.OUT)
@@ -30,10 +30,12 @@ GPIO.setup(PIN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 def BlinkAllLights(numberOfBlinks=1):
     DELAY = 0.1
     print('BlinkAllLights(', numberOfBlinks)
+
     for i in range(numberOfBlinks):
         for pin in ALL_OUTPUT_PIN_NUMBERS:
             GPIO.output(pin, 1)
         time.sleep(DELAY)
+
         for pin in ALL_OUTPUT_PIN_NUMBERS:
             GPIO.output(pin, 0)
         time.sleep(DELAY)
@@ -56,7 +58,7 @@ def Slack(*args):
         print('Slack resp=', resp.text)
 
 
-Slack('starting', 'using production server')
+Slack('starting')
 
 numErrors = 0
 
