@@ -1,2 +1,0 @@
-import flask_raspi_gpio_control
-flask_raspi_gpio_control.Start()
