@@ -33,11 +33,11 @@ def BlinkAllLights(numberOfBlinks=1):
 
     for i in range(numberOfBlinks):
         for pin in ALL_OUTPUT_PIN_NUMBERS:
-            GPIO.output(pin, 1)
+            GPIO.output(int(pin), 1)
         time.sleep(DELAY)
 
         for pin in ALL_OUTPUT_PIN_NUMBERS:
-            GPIO.output(pin, 0)
+            GPIO.output(int(pin), 0)
         time.sleep(DELAY)
 
 
@@ -93,7 +93,7 @@ def Start():
                         pinNum = action[0]
                         action = action[1]
                         GPIO.output(
-                            pinNum,
+                            int(pinNum),
                             {
                                 'On': GPIO.HIGH,
                                 'Off': GPIO.LOW,
