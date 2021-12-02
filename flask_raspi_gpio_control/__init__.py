@@ -91,6 +91,7 @@ def Start():
                     print('93 action=', action)
                     if str(action[0]).isdigit() and action[0] in ALL_OUTPUT_PIN_NUMBERS:
                         pinNum = action[0]
+                        action = action[1]
                         GPIO.output(
                             pinNum,
                             {
@@ -115,7 +116,7 @@ def Start():
             # reset the measurements
             totalRequests = 0
             startTime = time.time()
-            delay = 1
+            delay = 10
 
             if sys.platform.startswith('win'):
                 raise e
