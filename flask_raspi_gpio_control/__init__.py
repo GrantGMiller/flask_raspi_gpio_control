@@ -89,7 +89,7 @@ def Start():
             for macro in resp.json().get('macros', []):
                 for action in macro.get('actions', []):
                     print('93 action=', action)
-                    if str(action[0]).isdigit() and action[0] in ALL_OUTPUT_PIN_NUMBERS:
+                    if str(action[0]).isdigit() and int(action[0]) in ALL_OUTPUT_PIN_NUMBERS:
                         pinNum = action[0]
                         action = action[1]
                         GPIO.output(
@@ -98,7 +98,7 @@ def Start():
                                 'On': GPIO.HIGH,
                                 'Off': GPIO.LOW,
                                 'Toggle': GPIO.HIGH if GPIO.read(pinNum) == GPIO.LOW else GPIO.LOW,
-                            }.get(action[1])
+                            }.get(action)
                         )
 
                     elif action[0] == SLEEP:
