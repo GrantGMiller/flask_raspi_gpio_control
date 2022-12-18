@@ -1,3 +1,4 @@
+import datetime
 import time
 import requests
 import sys
@@ -44,6 +45,10 @@ def all_on():
     for pin in ALL_OUTPUT_PIN_NUMBERS:
         GPIO.output(int(pin), 1)
 
+def all_off():
+    for pin in ALL_OUTPUT_PIN_NUMBERS:
+        GPIO.output(int(pin), 0)
+
 go = True
 
 
@@ -61,7 +66,7 @@ def Slack(*args):
         print('Slack resp=', resp.text)
 
 
-Slack('starting')
+Slack('starting 2022-12-18 2:43pm')
 
 numErrors = 0
 
@@ -130,8 +135,13 @@ def Start():
             Slack('button pushed, triggering callback')
             print('eventCallbacks=', eventCallbacks)
             BlinkAllLights(3)
-            if PIN_BUTTON in eventCallbacks:
-                eventCallbacks[PIN_BUTTON](GPIO.input(PIN_BUTTON))
+            # if PIN_BUTTON in eventCallbacks:
+            #     eventCallbacks[PIN_BUTTON](GPIO.input(PIN_BUTTON))
+
+            if GPIO.read(ALL_OUTPUT_PIN_NUMBERS[0]) == GPIO.LOW:
+                all_on()
+            else:
+                all_off()
 
 
 def Stop():
@@ -148,4 +158,8 @@ def RegisterEvent(pin, callback):
 
 
 if __name__ == '__main__':
-    all_on()
+    now = datetime.datetime.now()
+    if now.hour > 17 or now.hour < 7:
+        all_on()
+    else:
+        all_off()
