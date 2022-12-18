@@ -4,6 +4,7 @@ import time
 import requests
 import sys
 import config
+
 if sys.platform.startswith('linux'):
     from . import gpio_helper as GPIO
 else:
@@ -105,11 +106,12 @@ def Start():
             macro = random.choice(allMacros)
             do_macro(macro)
         else:
-            #night time
+            # night time
             all_off()
 
         check_button_push_event()
         time.sleep(10)
+
 
 def do_macro(macro):
     for action in macro.actions:
@@ -128,6 +130,7 @@ def do_macro(macro):
 
         elif action[0] == SLEEP:
             time.sleep(action[1])
+
 
 def Start_old():
     print('starting while loop')
