@@ -77,7 +77,7 @@ def Slack(*args):
             print('Slack resp=', resp.text)
 
 
-Slack('starting 2022-12-18 6:14pm')
+Slack('starting 2022-12-18 6:32pm')
 
 numErrors = 0
 
@@ -101,6 +101,7 @@ def Start():
         now = datetime.datetime.now()
         if now.hour >= 17 or now.hour < 7:
             # daytime
+            all_on()
             allMacros = [m1, m2]
 
             macro = random.choice(allMacros)
