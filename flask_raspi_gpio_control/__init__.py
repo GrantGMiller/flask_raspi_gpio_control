@@ -1,9 +1,12 @@
 import datetime
+import random
 import time
 import requests
 import sys
 import config
 from . import gpio_helper as GPIO
+from macro_1 import m as m1
+from macro_2 import m as m2
 
 ALL_OUTPUT_PIN_NUMBERS = [16, 20, 21, 5, 6, 13, 19, 26]
 PIN_BUTTON = 12
@@ -93,7 +96,10 @@ def Start():
         now = datetime.datetime.now()
         if now.hour >= 17 or now.hour < 7:
             # daytime
-            all_on()
+            allMacros = [m1, m2]
+
+            macro = random.choice(allMacros)
+            do_macro(macro.json())
         else:
             #night time
             all_off()
@@ -101,6 +107,23 @@ def Start():
         check_button_push_event()
         time.sleep(10)
 
+def do_macro(macro):
+    for action in macro.get('actions', []):
+        print('93 action=', action)
+        if str(action[0]).isdigit() and int(action[0]) in ALL_OUTPUT_PIN_NUMBERS:
+            pinNum = action[0]
+            action = action[1]
+            GPIO.output(
+                int(pinNum),
+                {
+                    'On': GPIO.HIGH,
+                    'Off': GPIO.LOW,
+                    'Toggle': GPIO.HIGH if GPIO.read(pinNum) == GPIO.LOW else GPIO.LOW,
+                }.get(action)
+            )
+
+        elif action[0] == SLEEP:
+            time.sleep(action[1])
 
 def Start_old():
     print('starting while loop')
@@ -126,22 +149,7 @@ def Start_old():
                     )
 
             for macro in resp.json().get('macros', []):
-                for action in macro.get('actions', []):
-                    print('93 action=', action)
-                    if str(action[0]).isdigit() and int(action[0]) in ALL_OUTPUT_PIN_NUMBERS:
-                        pinNum = action[0]
-                        action = action[1]
-                        GPIO.output(
-                            int(pinNum),
-                            {
-                                'On': GPIO.HIGH,
-                                'Off': GPIO.LOW,
-                                'Toggle': GPIO.HIGH if GPIO.read(pinNum) == GPIO.LOW else GPIO.LOW,
-                            }.get(action)
-                        )
-
-                    elif action[0] == SLEEP:
-                        time.sleep(action[1])
+                do_macro(macro)
 
             print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
             delay = resp.json().get('delay', 1)
