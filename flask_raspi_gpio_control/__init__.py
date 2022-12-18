@@ -85,10 +85,6 @@ def check_button_push_event():
             # other scripts can use RegisterCallback to make things happen when pins go high/low
             eventCallbacks[PIN_BUTTON](GPIO.input(PIN_BUTTON))
 
-        if GPIO.read(ALL_OUTPUT_PIN_NUMBERS[0]) == GPIO.LOW:
-            all_on()
-        else:
-            all_off()
         return True
 
 
@@ -96,14 +92,14 @@ def Start():
     while True:
         now = datetime.datetime.now()
         if now.hour > 17 or now.hour < 7:
+            # daytime
             all_on()
         else:
+            #night time
             all_off()
 
-        if check_button_push_event():
-            time.sleep(60)
-        else:
-            time.sleep(10)
+        check_button_push_event()
+        time.sleep(10)
 
 
 def Start_old():
