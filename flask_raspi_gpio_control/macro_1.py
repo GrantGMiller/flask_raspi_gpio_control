@@ -1,4 +1,9 @@
-from macro_helper import *
+import sys
+
+if sys.platform.startswith('linux'):
+    from .macro_helper import *
+else:
+    from macro_helper import *
 
 # twinkle left to right
 m = Macro()
