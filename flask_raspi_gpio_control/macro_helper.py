@@ -1,13 +1,13 @@
 import json
 
-PIN_1 = 16
-PIN_2 = 20
-PIN_3 = 21
-PIN_4 = 5
-PIN_5 = 6
-PIN_6 = 13
-PIN_7 = 19
-PIN_8 = 26
+PIN_6 = 16
+PIN_7 = 20
+PIN_8 = 21
+PIN_1 = 5
+PIN_2 = 6
+PIN_3 = 13
+PIN_4 = 19
+PIN_5 = 26
 
 ALL_PINS = [
     PIN_1, PIN_2, PIN_3, PIN_4, PIN_5, PIN_6, PIN_7, PIN_8
