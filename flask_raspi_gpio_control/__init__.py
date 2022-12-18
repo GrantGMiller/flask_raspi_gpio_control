@@ -91,6 +91,20 @@ def check_button_push_event():
 
 
 def Start():
+    while True:
+        now = datetime.datetime.now()
+        if now.hour > 17 or now.hour < 7:
+            all_on()
+        else:
+            all_off()
+
+        if check_button_push_event():
+            time.sleep(60)
+        else:
+            time.sleep(10)
+
+
+def Start_old():
     print('starting while loop')
     global numErrors
 
@@ -167,14 +181,5 @@ def RegisterEvent(pin, callback):
 
 
 if __name__ == '__main__':
-    while True:
-        now = datetime.datetime.now()
-        if now.hour > 17 or now.hour < 7:
-            all_on()
-        else:
-            all_off()
-
-        if check_button_push_event():
-            time.sleep(60)
-        else:
-            time.sleep(10)
+    # another process calls .Start(), so put whatever u want into def Start()
+    Start()
