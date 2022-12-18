@@ -7,10 +7,13 @@ import config
 
 if sys.platform.startswith('linux'):
     from . import gpio_helper as GPIO
+    from .macro_1 import m as m1
+    from .macro_2 import m as m2
 else:
+    # macos windows
     import gpio_helper as GPIO
-from macro_1 import m as m1
-from macro_2 import m as m2
+    from macro_1 import m as m1
+    from macro_2 import m as m2
 
 ALL_OUTPUT_PIN_NUMBERS = [16, 20, 21, 5, 6, 13, 19, 26]
 PIN_BUTTON = 12
