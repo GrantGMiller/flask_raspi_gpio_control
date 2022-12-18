@@ -80,8 +80,10 @@ def check_button_push_event():
         Slack('button pushed, triggering callback')
         print('eventCallbacks=', eventCallbacks)
         BlinkAllLights(3)
-        # if PIN_BUTTON in eventCallbacks:
-        #     eventCallbacks[PIN_BUTTON](GPIO.input(PIN_BUTTON))
+
+        if PIN_BUTTON in eventCallbacks:
+            # other scripts can use RegisterCallback to make things happen when pins go high/low
+            eventCallbacks[PIN_BUTTON](GPIO.input(PIN_BUTTON))
 
         if GPIO.read(ALL_OUTPUT_PIN_NUMBERS[0]) == GPIO.LOW:
             all_on()
