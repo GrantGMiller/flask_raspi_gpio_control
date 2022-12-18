@@ -69,7 +69,7 @@ def Slack(*args):
         print('Slack resp=', resp.text)
 
 
-Slack('starting 2022-12-18 2:54pm')
+Slack('starting 2022-12-18 4:41pm')
 
 numErrors = 0
 
