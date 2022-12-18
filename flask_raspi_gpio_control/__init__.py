@@ -4,7 +4,10 @@ import time
 import requests
 import sys
 import config
-from . import gpio_helper as GPIO
+if sys.platform.startswith('linux'):
+    from . import gpio_helper as GPIO
+else:
+    import gpio_helper as GPIO
 from macro_1 import m as m1
 from macro_2 import m as m2
 
@@ -59,17 +62,18 @@ go = True
 
 
 def Slack(*args):
-    if not sys.platform.startswith('win'):
-        resp = requests.post(
-            url=config.SLACK_URL,
-            json={
-                'text': '{}: {}'.format(
-                    sys.platform,
-                    ' '.join(str(a) for a in args)
-                )
-            }
-        )
-        print('Slack resp=', resp.text)
+    if config.SLACK_URL:
+        if not sys.platform.startswith('win'):
+            resp = requests.post(
+                url=config.SLACK_URL,
+                json={
+                    'text': '{}: {}'.format(
+                        sys.platform,
+                        ' '.join(str(a) for a in args)
+                    )
+                }
+            )
+            print('Slack resp=', resp.text)
 
 
 Slack('starting 2022-12-18 6:14pm')
@@ -99,7 +103,7 @@ def Start():
             allMacros = [m1, m2]
 
             macro = random.choice(allMacros)
-            do_macro(macro.json())
+            do_macro(macro)
         else:
             #night time
             all_off()
@@ -108,7 +112,7 @@ def Start():
         time.sleep(10)
 
 def do_macro(macro):
-    for action in macro.get('actions', []):
+    for action in macro.actions:
         print('93 action=', action)
         if str(action[0]).isdigit() and int(action[0]) in ALL_OUTPUT_PIN_NUMBERS:
             pinNum = action[0]

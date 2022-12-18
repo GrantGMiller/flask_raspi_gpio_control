@@ -3,7 +3,7 @@ from macro_helper import *
 # twinkle left to right
 m = Macro()
 lastPin = None
-for pin in ALL_PINS.reverse():
+for pin in reversed(ALL_PINS):
     if lastPin:
         m.toggle(lastPin)
     m.toggle(pin)

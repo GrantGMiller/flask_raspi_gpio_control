@@ -2,7 +2,7 @@ import sys
 from collections import defaultdict
 
 if sys.platform.startswith('win') or sys.platform.startswith('darwin'):
-    from . import GPIO
+     import GPIO
 
 
 else:  # linux
