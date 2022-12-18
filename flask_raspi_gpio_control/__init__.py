@@ -40,6 +40,9 @@ def BlinkAllLights(numberOfBlinks=1):
             GPIO.output(int(pin), 0)
         time.sleep(DELAY)
 
+def all_on():
+    for pin in ALL_OUTPUT_PIN_NUMBERS:
+        GPIO.output(int(pin), 1)
 
 go = True
 
@@ -145,4 +148,4 @@ def RegisterEvent(pin, callback):
 
 
 if __name__ == '__main__':
-    Start()
+    all_on()
