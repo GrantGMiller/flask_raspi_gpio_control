@@ -91,7 +91,7 @@ def check_button_push_event():
 def Start():
     while True:
         now = datetime.datetime.now()
-        if now.hour > 17 or now.hour < 7:
+        if now.hour >= 17 or now.hour < 7:
             # daytime
             all_on()
         else:
