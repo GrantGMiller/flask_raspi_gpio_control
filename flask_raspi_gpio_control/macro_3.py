@@ -12,7 +12,7 @@ sleepTime = random.random() / 5
 
 m = Macro()
 
-for i in range(10000):
+for i in range(5000):
     m.toggle(random.choice(ALL_PINS))
     m.sleep(random.random()/1000)
 
