@@ -4,6 +4,7 @@ import time
 import requests
 import sys
 import config
+import threading
 
 if sys.platform.startswith('linux'):
     from . import gpio_helper as GPIO
@@ -86,6 +87,7 @@ numErrors = 0
 
 
 def check_button_push_event():
+    print('check')
     # return True if button was pushed
     if GPIO.input(PIN_BUTTON) == GPIO.LOW:
         Slack('button pushed, triggering callback')
@@ -113,7 +115,6 @@ def Start():
             # night time
             all_off()
 
-        check_button_push_event()
         time.sleep(random.randint(10, 30))
 
 
@@ -136,54 +137,6 @@ def do_macro(macro):
             time.sleep(action[1])
 
 
-def Start_old():
-    print('starting while loop')
-    global numErrors
-
-    BlinkAllLights(2)
-    totalRequests = 0
-    startTime = time.time()
-    while go is True:
-        try:
-            totalRequests += 1
-            resp = requests.get(
-                BASE_URL + 'lights',
-                params={'apiKey': config.API_KEY},
-                timeout=2
-            )
-            print('resp.text=', resp.text)
-            for pinNumberStr, state in resp.json().items():
-                if pinNumberStr.isdigit() and int(pinNumberStr) in ALL_OUTPUT_PIN_NUMBERS:
-                    GPIO.output(
-                        int(pinNumberStr),
-                        {'On': GPIO.HIGH, 'Off': GPIO.LOW}.get(state)
-                    )
-
-            for macro in resp.json().get('macros', []):
-                do_macro(macro)
-
-            print('Average req/second=', round(totalRequests / (time.time() - startTime), 2))
-            delay = resp.json().get('delay', 1)
-
-        except Exception as e:
-            numErrors += 1
-            if numErrors <= 1:
-                Slack(e)
-
-            print(e)
-            # reset the measurements
-            totalRequests = 0
-            startTime = time.time()
-            delay = 10
-
-            if sys.platform.startswith('win'):
-                raise e
-
-        time.sleep(delay)
-
-        check_button_push_event()
-
-
 def Stop():
     print('Stop()')
     global go
@@ -196,6 +149,15 @@ eventCallbacks = {}
 def RegisterEvent(pin, callback):
     eventCallbacks[pin] = callback
 
+
+def thread_loop():
+    while go:
+        time.sleep(1)
+        check_button_push_event()
+
+
+loop_thread = threading.Thread(target=thread_loop)
+loop_thread.start()
 
 if __name__ == '__main__':
     # another process calls .Start(), so put whatever u want into def Start()
