@@ -12,7 +12,7 @@ for pin in reversed(ALL_PINS):
     if lastPin:
         m.toggle(lastPin)
     m.toggle(pin)
-    m.sleep(0.1)
+    m.sleep(0.05)
 
     lastPin = pin
 
