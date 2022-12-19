@@ -1,9 +1,9 @@
 import json
 
 PIN_6 = 16
-PIN_7 = 20
+PIN_1 = 20 # actually 7
 PIN_8 = 21
-PIN_1 = 5
+PIN_7 = 5 # actuall 1, but 1 is broken
 PIN_2 = 6
 PIN_3 = 13
 PIN_4 = 19
