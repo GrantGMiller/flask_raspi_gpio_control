@@ -10,11 +10,13 @@ if sys.platform.startswith('linux'):
     from . import gpio_helper as GPIO
     from .macro_1 import m as m1
     from .macro_2 import m as m2
+    from .macro_3 import m as m3
 else:
     # macos windows
     import gpio_helper as GPIO
     from macro_1 import m as m1
     from macro_2 import m as m2
+    from macro_3 import m as m3
 
 ALL_OUTPUT_PIN_NUMBERS = [16, 20, 21, 5, 6, 13, 19, 26]
 PIN_BUTTON = 12
@@ -102,17 +104,17 @@ def check_button_push_event():
 
 
 def Start():
-    while True:
+    while go:
         now = datetime.datetime.now()
         if now.hour >= 17 or now.hour < 7:
-            # daytime
+            # night time
             all_on()
-            allMacros = [m1, m2]
+            all_macros = [m1, m2, m3]
 
-            macro = random.choice(allMacros)
+            macro = random.choice(all_macros)
             do_macro(macro)
         else:
-            # night time
+            # day time
             all_off()
 
         time.sleep(random.randint(10, 30))
