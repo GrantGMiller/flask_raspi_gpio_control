@@ -105,18 +105,19 @@ def check_button_push_event():
         return True
 
 
-def Start():
+def Start(): # dont rename, there are other systems depending on this name
     while go:
         now = datetime.datetime.now()
-        if now.hour >= 17 or now.hour < 7:
-            # night time
+        end_test_date = datetime.date(year=2022, month=12, day=19)
+        if now.hour >= 17 or now.hour < 7 or now.date() <= end_test_date:
+            # night
             all_on()
-            all_macros = [m1, m2, m3]
+            all_macros = [m1, m2, m3, m4]
 
             macro = random.choice(all_macros).get_macro()
             do_macro(macro)
         else:
-            # day time
+            # day
             all_off()
 
         time.sleep(random.randint(10, 30))
