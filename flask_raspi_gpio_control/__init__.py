@@ -8,15 +8,17 @@ import threading
 
 if sys.platform.startswith('linux'):
     from . import gpio_helper as GPIO
-    from .macro_1 import m as m1
-    from .macro_2 import m as m2
-    from .macro_3 import m as m3
+    from . import macro_1 as m1
+    from . import macro_2 as m2
+    from . import macro_3 as m3
+    from . import macro_4 as m4
 else:
     # macos windows
     import gpio_helper as GPIO
-    from macro_1 import m as m1
-    from macro_2 import m as m2
-    from macro_3 import m as m3
+    import macro_1 as m1
+    import macro_2 as m2
+    import macro_3 as m3
+    import macro_4 as m4
 
 ALL_OUTPUT_PIN_NUMBERS = [16, 20, 21, 5, 6, 13, 19, 26]
 PIN_BUTTON = 12
@@ -89,7 +91,7 @@ numErrors = 0
 
 
 def check_button_push_event():
-    print('check')
+    print('check', datetime.datetime.now())
     # return True if button was pushed
     if GPIO.input(PIN_BUTTON) == GPIO.LOW:
         Slack('button pushed, triggering callback')
@@ -111,7 +113,7 @@ def Start():
             all_on()
             all_macros = [m1, m2, m3]
 
-            macro = random.choice(all_macros)
+            macro = random.choice(all_macros).get_macro()
             do_macro(macro)
         else:
             # day time

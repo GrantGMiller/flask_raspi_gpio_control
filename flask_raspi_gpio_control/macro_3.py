@@ -6,15 +6,16 @@ if sys.platform.startswith('linux'):
 else:
     from macro_helper import *
 
-# twinkle left to right
+# all lights shimmer
 
-sleepTime = random.random() / 5
+def get_macro():
 
-m = Macro()
+    m = Macro()
 
-for i in range(5000):
-    m.toggle(random.choice(ALL_PINS))
-    m.sleep(random.random()/1000)
+    for i in range(5000):
+        m.toggle(random.choice(ALL_PINS))
+        m.sleep(random.random()/1000)
 
-m.all_on()
+    m.all_on()
 
+    return m
