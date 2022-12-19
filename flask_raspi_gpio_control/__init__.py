@@ -114,7 +114,7 @@ def Start():
             all_off()
 
         check_button_push_event()
-        time.sleep(10)
+        time.sleep(random.randint(10, 30))
 
 
 def do_macro(macro):
