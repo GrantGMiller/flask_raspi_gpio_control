@@ -120,7 +120,7 @@ def Start(): # dont rename, there are other systems depending on this name
             # day
             all_off()
 
-        time.sleep(random.randint(10, 30))
+        time.sleep(random.randint(30, 60))
 
 
 def do_macro(macro):
