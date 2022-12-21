@@ -110,7 +110,7 @@ def check_button_push_event():
 def Start():  # dont rename, there are other systems depending on this name
     while go:
         now = datetime.datetime.now()
-        end_test_date = datetime.date(year=2022, month=12, day=21)  # runs test all day today
+        end_test_date = datetime.date(year=2022, month=12, day=20)  # runs test all day today
         if now.hour >= 17 or now.hour < 7 or now.date() <= end_test_date:
             # night
             all_on()
