@@ -110,10 +110,11 @@ def check_button_push_event():
 def Start():  # dont rename, there are other systems depending on this name
     while go:
         now = datetime.datetime.now()
-        end_test_date = datetime.date(year=2022, month=12, day=19)  # runs test all day today
+        end_test_date = datetime.date(year=2022, month=12, day=21)  # runs test all day today
         if now.hour >= 17 or now.hour < 7 or now.date() <= end_test_date:
             # night
             all_on()
+            # all_macros = [m5]
             all_macros = [m1, m2, m3, m4, m5]
 
             macro = random.choice(all_macros).get_macro()
