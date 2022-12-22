@@ -125,7 +125,7 @@ def Start():  # dont rename, there are other systems depending on this name
             # day
             all_off()
 
-        if sys.platform.startswith('linux'):
+        if False:#sys.platform.startswith('linux'):
             time.sleep(random.randint(30, 60))
         else:
             print('sleep')
