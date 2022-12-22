@@ -30,6 +30,7 @@ LEFT_TO_RIGHT = 'left to right'
 RIGHT_TO_LEFT = 'right to left'
 TOGGLE = 'Toggle'
 SLEEP = 'Sleep'
+MACRO_FAILED = False
 
 if sys.platform.startswith('win'):
     # BASE_URL = 'http://localhost:5000/'
@@ -110,6 +111,7 @@ def check_button_push_event():
 
 
 def Start():  # dont rename, there are other systems depending on this name
+    global MACRO_FAILED
     while go:
         now = datetime.datetime.now()
         end_test_date = datetime.date(year=2022, month=12, day=20)  # runs test all day today
@@ -118,9 +120,13 @@ def Start():  # dont rename, there are other systems depending on this name
             all_on()
             # all_macros = [m6]
             all_macros = [m1, m2, m3, m4, m5, m6]
-
-            macro = random.choice(all_macros).get_macro()
-            do_macro(macro)
+            try:
+                macro = random.choice(all_macros).get_macro()
+                do_macro(macro)
+            except Exception as e:
+                if not MACRO_FAILED:
+                    MACRO_FAILED = True
+                    Slack(str(e))
         else:
             # day
             all_off()
@@ -172,6 +178,9 @@ def thread_loop():
 
 loop_thread = threading.Thread(target=thread_loop)
 loop_thread.start()
+
+
+
 
 if __name__ == '__main__':
     # another process calls .Start(), so put whatever u want into def Start()

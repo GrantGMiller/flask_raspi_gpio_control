@@ -14,7 +14,7 @@ def get_macro():
     m = Macro()
     delay = random.random() * 0.25
     m.all_off()
-    for i in range(random.randint(10, 20)):
+    for i in range(random.randint(20, 30)):
         for index, pin in enumerate(ALL_PINS):
             if i % 3 == index % 3:
                 m.on(pin)
