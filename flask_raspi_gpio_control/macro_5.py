@@ -17,7 +17,7 @@ def get_macro():
     for i in range(random.randint(5, 10)):
         direction = i % 2
         if direction:
-            for pin in len(ALL_PINS):
+            for pin in ALL_PINS:
                 m.all_off()
                 m.on(pin)
                 m.sleep(delay)
